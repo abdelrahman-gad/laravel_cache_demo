@@ -45,8 +45,8 @@ class SubscribtionExpiryNotification extends Command
         foreach($expired_customers as $customer){
 
             $expire_date = Carbon::createFromFormat('Y-m-d', $customer->subscribtion_end_date)->toDateString();
-             
-            dispatch(new SendSubscribtionExpireMessageJob($customer,$expire_date));
+
+            dispatch(new SendSubscribtionExpireMessageJob($customer,$expire_date))->onQueue('gad');
         }
     }
 }

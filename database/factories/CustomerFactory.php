@@ -15,7 +15,7 @@ class CustomerFactory extends Factory
     {
         return [
             'name'=>$this->faker->name(),
-            'subscribtion_end_date'=>'2022-01-9',
+            'subscribtion_end_date'=>'2022-01-7',
             'email'=>$this->faker->unique()->safeEmail()
         ];
     }
