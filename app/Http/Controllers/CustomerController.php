@@ -4,9 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class CustomerController extends Controller
 {
+
+    public function checkCustomer(Request $request){
+
+       $customer_id =  Customer::where('national_id',$request->national_id)->first()->id;
+       //  $customer_id = Redis::get('national_'.$request->national_id);
+       if($customer_id){
+
+        $upd_customer = Customer::where('id',$customer_id)->update($request->all());
+        return response(['data'=>$upd_customer,'message'=>'customer updated']);
+     }else{
+        $new_customer =  Customer::create($request->all());
+        return response(['data'=>$new_customer,'message'=>'customer updated']);
+       }
+    }
     /**
      * Display a listing of the resource.
      *
