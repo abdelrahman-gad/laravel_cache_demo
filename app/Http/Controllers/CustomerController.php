@@ -5,21 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
-
+use Illuminate\Support\Facades\Cache;
 class CustomerController extends Controller
 {
 
     public function checkCustomer(Request $request){
 
-       //$customer_id =  Customer::where('national_id',$request->national_id)->first()->id;
-        $customer_id = Redis::get('national_'.$request->national_id);
-       if($customer_id){
+    //    $customer =  Customer::where('national_id',$request->national_id)->first();
+       $customer_id = Cache::get('national_id_'.$request->national_id);
+
+       if($customer_id){  
 
         $upd_customer = Customer::where('id',$customer_id)->update($request->all());
         return response(['data'=>$upd_customer,'message'=>'customer updated']);
      }else{
         $new_customer =  Customer::create($request->all());
-        return response(['data'=>$new_customer,'message'=>'customer updated']);
+        return response(['data'=>$new_customer,'message'=>'customer created']);
        }
     }
     /**
