@@ -11,8 +11,8 @@ class CustomerController extends Controller
 
     public function checkCustomer(Request $request){
 
-       $customer_id =  Customer::where('national_id',$request->national_id)->first()->id;
-       //  $customer_id = Redis::get('national_'.$request->national_id);
+    //    $customer_id =  Customer::where('national_id',$request->national_id)->first()->id;
+        $customer_id = Redis::get('national_'.$request->national_id);
        if($customer_id){
 
         $upd_customer = Customer::where('id',$customer_id)->update($request->all());
